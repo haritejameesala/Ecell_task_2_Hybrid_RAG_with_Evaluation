@@ -1,0 +1,22 @@
+{
+  "papers": 5,
+  "chunks": 2692,
+  "tokens": 232434,
+  "queries": 0,
+  "file_types": {
+    "pdf": 585
+  },
+  "doc_categories": [
+    "POLICY",
+    "COMPLIANCE",
+    "SOP",
+    "TROUBLESHOOTING"
+  ],
+  "chunk_size_min": 26,
+  "chunk_size_max": 1181,
+  "chunk_size_avg": 608.1,
+  "embedding_model": "BAAI/bge-large-en-v1.5",
+  "vector_store": "FAISS + BM25",
+  "retrieval_strategy": "Hybrid Search",
+  "chunking_strategy": "Structure-aware + Semantic + Recursive Hybrid (max=1000, min=200, breakpoint_pct=80)"
+}
