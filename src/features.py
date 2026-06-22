@@ -134,12 +134,24 @@ def build_index(
         docs_folder
     )
 
+    if not docs:
+        raise ValueError(
+            f"No documents found in '{docs_folder}'. "
+            "Ensure the folder exists and contains PDF or TXT files."
+        )
+
     chunks = chunking(
         docs,
         max_chunk_size=max_chunk_size,
         min_chunk_size=min_chunk_size,
         breakpoint_threshold_amount=breakpoint_threshold_amount
     )
+
+    if not chunks:
+        raise ValueError(
+            "Chunking produced no usable chunks. "
+            "Check that the documents contain extractable text content."
+        )
 
     stats = compute_index_stats(
         docs,

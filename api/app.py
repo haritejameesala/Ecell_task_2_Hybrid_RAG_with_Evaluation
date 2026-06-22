@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -109,10 +109,15 @@ def build(notebook: str):
         "faiss_store"
     )
 
-    build_index(
-        docs_dir,
-        faiss_dir
-    )
+    try:
+        build_index(
+            docs_dir,
+            faiss_dir
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Index build failed: {str(e)}")
 
     if notebook in rag_pipelines:
         del rag_pipelines[notebook]

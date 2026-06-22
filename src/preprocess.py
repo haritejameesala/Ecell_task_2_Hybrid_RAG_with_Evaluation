@@ -249,6 +249,10 @@ def chunking(
                 )
             )
 
+    if not structural_docs:
+        print("[WARNING] No structural sections produced after cleaning. Documents may be empty or unreadable.")
+        return []
+
     raw_chunks = splitter.split_documents(structural_docs)
 
     capper = RecursiveCharacterTextSplitter(
