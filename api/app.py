@@ -23,8 +23,8 @@ app.add_middleware(
 
 load_dotenv()
 
-DATA_DIR = os.getenv("DATA_DIR", "data")
-MODEL_DIR = os.getenv("MODEL_DIR", "models")
+DATA_DIR = os.getenv("DATA_DIR", "data/notebooks")
+MODEL_DIR = os.getenv("MODEL_DIR", "models/notebooks")
 DEFAULT_NOTEBOOK = os.getenv("DEFAULT_NOTEBOOK", "default")
 
 rag_pipelines = {}
@@ -38,6 +38,7 @@ def get_pipeline(notebook=DEFAULT_NOTEBOOK):
     if notebook not in rag_pipelines:
         faiss_dir = os.path.join(
             MODEL_DIR,
+            notebook,
             "faiss_store"
         )
 
@@ -104,6 +105,7 @@ def build(notebook: str):
 
     faiss_dir = os.path.join(
         MODEL_DIR,
+        notebook,
         "faiss_store"
     )
 

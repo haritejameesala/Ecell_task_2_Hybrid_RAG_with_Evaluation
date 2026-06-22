@@ -87,13 +87,9 @@ def load_all_docs(data_directory):
     pdf_files = list(data_path.glob("**/*.pdf"))
     txt_files = list(data_path.glob("**/*.txt"))
 
-    print(f"[INFO] Found {len(pdf_files)} PDFs and {len(txt_files)} TXTs")
-
     documents = []
 
     for pdf_file in pdf_files:
-        print(f"[INFO] Loading PDF: {pdf_file.name}")
-
         try:
             pdf_docs = PyPDFLoader(str(pdf_file)).load()
 
@@ -115,8 +111,6 @@ def load_all_docs(data_directory):
             print(f"[ERROR] {pdf_file.name}: {e}")
 
     for txt_file in txt_files:
-        print(f"[INFO] Loading TXT: {txt_file.name}")
-
         try:
             with open(txt_file, "r", encoding="utf-8") as f:
                 content = f.read()
@@ -135,8 +129,6 @@ def load_all_docs(data_directory):
 
         except Exception as e:
             print(f"[ERROR] {txt_file.name}: {e}")
-
-    print(f"[INFO] Loaded {len(documents)} total documents")
 
     return documents
 
@@ -295,10 +287,5 @@ def chunking(
 
     if buffer is not None:
         final_chunks.append(buffer)
-
-    print(
-        f"[INFO] {len(documents)} docs -> {len(structural_docs)} sections "
-        f"-> {len(raw_chunks)} semantic chunks -> {len(final_chunks)} final chunks"
-    )
 
     return final_chunks

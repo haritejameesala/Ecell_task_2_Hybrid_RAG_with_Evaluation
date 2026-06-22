@@ -63,7 +63,6 @@ class GroqLLM(DeepEvalBaseLLM):
             .message.content.strip()
         )
 
-
         json.loads(output)
 
         return output
@@ -95,8 +94,8 @@ def evaluate_pipeline(
     output_path=None,
     mode="api",
     use_rerank=False,
-    groq_api_key=None  
-
+    groq_api_key=None
+):
     key = groq_api_key or os.getenv("GROQ_API_KEY")
 
     rag = load_rag_pipeline(
@@ -130,7 +129,6 @@ def evaluate_pipeline(
             else ["No relevant context retrieved."]
         )
 
-
         cr_metric = ContextualRelevancyMetric(
             threshold=0.7,
             model=judge_model,
@@ -145,7 +143,6 @@ def evaluate_pipeline(
 
         cr_metric.measure(cr_test)
 
-
         f_metric = FaithfulnessMetric(
             threshold=0.75,
             model=judge_model,
@@ -159,7 +156,6 @@ def evaluate_pipeline(
         )
 
         f_metric.measure(f_test)
-
 
         ar_metric = AnswerRelevancyMetric(
             threshold=0.7,
@@ -262,18 +258,17 @@ def evaluate_pipeline(
 if __name__ == "__main__":
     import sys
 
-    faiss_dir = (
-	    sys.argv[1]
-	    if len(sys.argv) > 1
-	    else os.getenv("FAISS_DIR", "models/faiss_store")
-	)
-
     notebook = (
-        sys.argv[2]
-        if len(sys.argv) > 2
-        else "default"
+        sys.argv[1]
+        if len(sys.argv) > 1
+        else os.getenv("DEFAULT_NOTEBOOK", "default")
     )
 
+    model_base = os.getenv("MODEL_DIR", "models/notebooks")
+
+    faiss_dir = os.path.join(model_base, notebook, "faiss_store")
+
+    output_path = os.path.join(model_base, notebook, "eval_report.json")
 
     groq_api_key_1 = os.getenv("GROQ_API_KEY_1") or os.getenv("GROQ_API_KEY")
     groq_api_key_2 = os.getenv("GROQ_API_KEY_2") or os.getenv("GROQ_API_KEY")
@@ -316,11 +311,6 @@ if __name__ == "__main__":
         "local": local_report,
         "api_rerank": api_rerank_report
     }
-
-    output_path = os.getenv(
-	    "EVAL_REPORT_PATH",
-	    "models/eval_report.json"
-	)
 
     with open(output_path, "w") as f:
         json.dump(final_report, f, indent=2)

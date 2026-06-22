@@ -18,8 +18,6 @@ class EmbeddingManager:
         self,
         model_name="BAAI/bge-large-en-v1.5"
     ):
-        print(f"[INFO] Loading model: {model_name}")
-
         self.model_name = model_name
 
         self.embedding_model = HuggingFaceEmbeddings(
@@ -36,7 +34,7 @@ class VectorStoreManager:
     def __init__(
         self,
         embedding_model,
-        persist_dir="faiss_store"
+        persist_dir="models/notebooks/default/faiss_store"
     ):
         self.embedding_model = embedding_model
         self.persist_dir = persist_dir
@@ -51,8 +49,6 @@ class VectorStoreManager:
         )
 
     def create(self, chunks):
-        print("[INFO] Creating FAISS index...")
-
         self.vectorstore = FAISS.from_documents(
             chunks,
             self.embedding_model
@@ -63,14 +59,10 @@ class VectorStoreManager:
             for doc in chunks
         ]
 
-        print("[INFO] Creating BM25 index...")
-
         self.bm25 = BM25Retriever.from_documents(
             chunks
         )
         self.bm25.k = 10
-
-        print("[INFO] Hybrid indexes created")
 
     def save(self):
         if self.vectorstore is None:
@@ -110,10 +102,6 @@ class VectorStoreManager:
                 f
             )
 
-        print(
-            f"[INFO] Saved at {self.persist_dir}"
-        )
-
     def load(self):
         self.vectorstore = FAISS.load_local(
             self.persist_dir,
@@ -133,13 +121,11 @@ class VectorStoreManager:
             ) as f:
                 self.bm25 = pickle.load(f)
 
-        print("[INFO] Hybrid indexes loaded")
-
         return self.vectorstore, self.bm25
 
 def build_index(
     docs_folder,
-    persist_dir="faiss_store",
+    persist_dir,
     max_chunk_size=1000,
     min_chunk_size=200,
     breakpoint_threshold_amount=80
@@ -228,14 +214,8 @@ def build_index(
         f"breakpoint_pct={breakpoint_threshold_amount})"
     )
 
-    notebook_dir = os.path.dirname(
-        os.path.abspath(
-            persist_dir
-        )
-    )
-
     stats_path = os.path.join(
-        notebook_dir,
+        os.path.dirname(persist_dir),
         "stats.json"
     )
 
@@ -244,34 +224,20 @@ def build_index(
         stats
     )
 
-    print(
-        f"[INFO] Stats saved at {stats_path}"
-    )
-
-    print(
-        "[INFO] Hybrid index built successfully"
-    )
-
 if __name__ == "__main__":
     import sys
 
-    docs_folder = (
-	    sys.argv[1]
-	    if len(sys.argv) > 1
-	    else os.getenv(
-	        "DOCS_DIR",
-	        "data/notebooks/default/docs"
-	    )
-	)
+    notebook = (
+        sys.argv[1]
+        if len(sys.argv) > 1
+        else os.getenv("DEFAULT_NOTEBOOK", "default")
+    )
 
-    persist_dir = (
-	    sys.argv[2]
-	    if len(sys.argv) > 2
-	    else os.getenv(
-	        "FAISS_DIR",
-	        "models/faiss_store"
-	    )
-	)
+    data_base = os.getenv("DATA_DIR", "data/notebooks")
+    model_base = os.getenv("MODEL_DIR", "models/notebooks")
+
+    docs_folder = os.path.join(data_base, notebook, "docs")
+    persist_dir = os.path.join(model_base, notebook, "faiss_store")
 
     build_index(
         docs_folder,

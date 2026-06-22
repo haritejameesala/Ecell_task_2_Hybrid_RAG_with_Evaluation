@@ -13,18 +13,25 @@ project/
 ├── data/
 │   └── notebooks/
 │       └── <notebook>/
-│           ├── docs/            # Raw PDF and TXT documents
-│           ├── faiss_store/     # Serialized FAISS + BM25 indices
-│           ├── stats.json       # Index statistics
-│           └── eval_report.json # Evaluation results
+│           └── docs/                # Raw PDF/TXT documents only
+│
+├── models/
+│   └── notebooks/
+│       └── <notebook>/
+│           ├── faiss_store/         # Serialized FAISS + BM25 indices
+│           ├── stats.json           # Index statistics
+│           └── eval_report.json     # Evaluation results
+│
 ├── src/
-│   ├── preprocess.py            # Document loading, cleaning, chunking
-│   ├── features.py              # Embedding generation, index creation
-│   ├── train.py                 # RAG chain, retriever, LLM orchestration
-│   ├── evaluate.py              # Pipeline benchmarking
-│   └── utils.py                 # Helpers and stats
+│   ├── preprocess.py                # Document loading, cleaning, chunking
+│   ├── features.py                  # Embedding generation, index creation
+│   ├── train.py                     # RAG chain, retriever, LLM orchestration
+│   ├── evaluate.py                  # Pipeline benchmarking
+│   └── utils.py                     # Helpers and stats
+│
 ├── api/
-│   └── app.py                   # FastAPI server
+│   └── app.py                       # FastAPI server
+│
 ├── README.md
 └── requirements.txt
 ```
