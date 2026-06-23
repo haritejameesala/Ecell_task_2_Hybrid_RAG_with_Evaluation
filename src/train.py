@@ -10,6 +10,13 @@ from sentence_transformers import CrossEncoder
 from src.features import EmbeddingManager, VectorStoreManager
 from src.utils import REFUSAL_PHRASES
 
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+from sentence_transformers import SentenceTransformer, util
+import numpy as np
+
+model = SentenceTransformer("all-MiniLM-L6-v2")
+
 load_dotenv()
 
 class RetrieverManager:
@@ -19,7 +26,7 @@ class RetrieverManager:
 
         self.reranker = CrossEncoder(
             "cross-encoder/ms-marco-MiniLM-L-6-v2",
-            default_activation_function=torch.nn.Sigmoid()
+            activation_fn=torch.nn.Sigmoid()
         )
 
     def rewrite_query(self, query):
@@ -241,48 +248,51 @@ class RAGChain:
         return "\n\n---\n\n".join(parts)
 
     def compute_confidence(self, docs, answer):
-        if not docs or not answer.strip():
-            return 0.0
 
-        clean_answer = re.sub(
-            r"\(Source:.*?\)",
-            "",
-            answer,
-            flags=re.IGNORECASE
-        )
+	    if not docs or not answer.strip():
+	        return 0.0
+	
+	    clean_answer = re.sub(
+	        r"\(Source:.*?\)",
+	        "",
+	        answer,
+	        flags=re.IGNORECASE
+	    ).strip()
+	
+	    doc_texts = [
+	        doc.page_content.strip()
+	        for doc in docs
+	        if doc.page_content.strip()
+	    ]
+	
+	    if not doc_texts:
+	        return 0.0
+	
+	    try:
 
-        answer_words = set(
-            re.findall(r"\w+", clean_answer.lower())
-        )
+	        pairs = [
+	            (clean_answer, doc_text)
+	            for doc_text in doc_texts
+	        ]
+	
+	        scores = self.retriever.reranker.predict(pairs)
 
-        if not answer_words:
-            return 0.0
+	        max_score = float(np.max(scores))
 
-        best_ratio = 0.0
+	        avg_score = float(np.mean(scores))
 
-        for doc in docs:
-            chunk_words = set(
-                re.findall(
-                    r"\w+",
-                    doc.page_content.lower()
-                )
-            )
+	        confidence = (0.7 * max_score) + (0.3 * avg_score)
+	
+	    except Exception:
+	        confidence = 0.0
 
-            overlap = len(answer_words & chunk_words)
-
-            ratio = overlap / len(answer_words)
-
-            best_ratio = max(best_ratio, ratio)
-
-        score = best_ratio
-
-        if any(
-            p in answer.lower()
-            for p in REFUSAL_PHRASES
-        ):
-            score = min(score, 0.3)
-
-        return round(min(score, 1.0), 2)
+	    if any(
+	        phrase in clean_answer.lower()
+	        for phrase in REFUSAL_PHRASES
+	    ):
+	        confidence = min(confidence, 0.30)
+	
+	    return round(min(confidence, 1.0), 2)
 
     def invoke(self, query, top_k=8):
         docs = self.retriever.retrieve(

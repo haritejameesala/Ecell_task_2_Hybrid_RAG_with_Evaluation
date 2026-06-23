@@ -227,7 +227,7 @@ The prompt enforces:
 
 Refusal phrases are detected and flagged.
 
-Confidence score is based on word overlap between answer and retrieved context.
+Confidence score is computed using cross-encoder groundedness scoring, measuring how strongly retrieved chunks support the generated answer.
 
 ---
 
@@ -280,9 +280,9 @@ Test queries:
 
 | Config | CR | F | AR | L (s) | QR |
 |---|---|---|---|---|---|
-| API (no rerank) | 0.6053 | **1.0000** | **0.9750** | **7.594** | 1.0 |
-| Local (no rerank) | 0.5785 | 0.9222 | 0.9200 | 15.723 | 1.0 |
-| API + Rerank | **0.6231** | 0.9000 | **0.9750** | 9.843 | 1.0 |
+| API (no rerank) | 0.4721 | 1.0000 | 0.9179 | 8.366 | 1.0 |
+| Local (no rerank) | 0.4628 | 1.0000 | 0.9214 | 10.159 | 1.0 |
+| API + Rerank | 0.5446 | 1.0000 | 0.9314 | 6.982 | 1.0 |
 
 ---
 
@@ -347,18 +347,18 @@ Response:
 
 ### Final Deployment
 
-**API (no rerank)**
+**API + rerank**
 
 ### Justification
 
 | Criterion | Reason |
 |---|---|
 | Faithfulness = 1.0 | Zero hallucination |
-| AR = 0.975 | Highly relevant answers |
-| Latency = 7.594s | Fastest among strong configs |
+| AR = 0.9314 | Highest semantic answer quality |
+| CR = 0.5446 | Best retrieval grounding |
+| Latency = 6.982s | Fastest overall |
 | QR = 1.0 | All queries resolved |
 
-Although reranking improved CR slightly, it reduced faithfulness and increased latency. Since groundedness is the primary task requirement, API mode was selected.
 
 ---
 
@@ -372,7 +372,7 @@ Although reranking improved CR slightly, it reduced faithfulness and increased l
 | Semantic breakpoint | Percentile 80 |
 | Retrieval | FAISS + BM25 |
 | LLM | Groq Llama-3.3-70B |
-| Reranking | Disabled |
+| Reranking | Enabled |
 | top_k | 8 |
 | Dense threshold | 1.15 |
 

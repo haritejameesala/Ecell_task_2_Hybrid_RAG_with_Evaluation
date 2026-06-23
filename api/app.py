@@ -45,7 +45,7 @@ def get_pipeline(notebook=DEFAULT_NOTEBOOK):
         rag_pipelines[notebook] = load_rag_pipeline(
             faiss_dir,
             mode="api",
-            use_rerank=False,
+            use_rerank=True,
             groq_api_key=os.getenv("GROQ_API_KEY_1")
         )
 
@@ -141,4 +141,32 @@ def query(
         "answer": result["answer"],
         "confidence": result["confidence"],
         "sources": result["sources"]
+    }
+
+@app.post("/create-notebook/{notebook}")
+def create_notebook(notebook: str):
+    docs_dir = os.path.join(
+        DATA_DIR,
+        notebook,
+        "docs"
+    )
+
+    model_dir = os.path.join(
+        MODEL_DIR,
+        notebook
+    )
+
+    os.makedirs(
+        docs_dir,
+        exist_ok=True
+    )
+
+    os.makedirs(
+        model_dir,
+        exist_ok=True
+    )
+
+    return {
+        "status": "created",
+        "notebook": notebook
     }

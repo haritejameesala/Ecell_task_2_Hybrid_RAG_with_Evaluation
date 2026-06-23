@@ -122,16 +122,16 @@ Benchmarked using DeepEval.
 
 | Config | CR | F | AR | L (s) | QR |
 |---|---|---|---|---|---|
-| API | 0.6053 | 1.0000 | 0.9750 | 7.594 | 1.0 |
-| Local | 0.5785 | 0.9222 | 0.9200 | 15.723 | 1.0 |
-| API + Rerank | 0.6231 | 0.9000 | 0.9750 | 9.843 | 1.0 |
+| API | 0.4721 | 1.0000 | 0.9179 | 8.366 | 1.0 |
+| Local | 0.4628 | 1.0000 | 0.9214 | 10.159 | 1.0 |
+| API + Rerank | 0.5446 | 1.0000 | 0.9314 | 6.982 | 1.0 |
 
 ### Selected Configuration
 
-**API (no rerank)**
+**API + Rerank**
 
-Reason:  
-The API configuration provides the best balance between faithfulness, answer relevance, and latency. While reranking improves context relevance slightly, it increases latency and reduces faithfulness. Since groundedness is a major task requirement, API mode was selected for deployment.
+Reason:
+API + Rerank achieved the best overall retrieval quality while maintaining perfect faithfulness and the lowest latency. Compared to API-only mode, reranking improved context relevance and answer relevance while reducing average response time, making it the strongest deployment configuration.
 
 ---
 
@@ -147,6 +147,7 @@ FastAPI application with auto-generated Swagger docs.
 | POST | `/upload/{notebook}` | Upload documents |
 | POST | `/build-index/{notebook}` | Build retrieval index |
 | POST | `/query/{notebook}` | Query documents |
+| POST | `/create-notebook/{notebook}` | Create notebook workspace |
 
 Swagger UI:
 

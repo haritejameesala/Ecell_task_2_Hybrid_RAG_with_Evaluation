@@ -6,10 +6,10 @@
       "top_k": 8
     },
     "aggregate": {
-      "CR": 0.6053,
+      "CR": 0.4721,
       "F": 1.0,
-      "AR": 0.975,
-      "L": 7.594,
+      "AR": 0.9179,
+      "L": 8.366,
       "QR": 1.0,
       "refusals": 0,
       "total_queries": 5
@@ -17,69 +17,69 @@
     "per_query": [
       {
         "query": "What are the phases of incident response?",
-        "answer": "The phases of incident response are: \n1. Preparation\n2. Detection and analysis\n3. Containment\n4. Eradication and recovery\n5. Post-incident activity.\n\nSource: NIST.SP.800-61r2.pdf, Page: 30",
+        "answer": "The phases of incident response are: \n1. Preparation\n2. Detection and Analysis\n3. Containment\n4. Eradication and Recovery\n5. Post-incident activity. \n(Source: NIST.SP.800-61r2.pdf, Page: 30)",
         "sources": [
           "NIST.SP.800-61r2.pdf"
         ],
-        "confidence": 0.61,
-        "CR": 0.5135,
+        "confidence": 0.94,
+        "CR": 0.3611,
         "F": 1.0,
         "AR": 0.875,
-        "latency": 0.945,
+        "latency": 1.975,
         "resolved": true
       },
       {
         "query": "What is the minimum password length?",
-        "answer": "The minimum password length is 16 characters. (Source: SANS_Password_Construction_Standard_April2025.pdf)",
+        "answer": "The minimum password length is 16 characters. \n(Source: SANS_Password_Construction_Standard_April2025.pdf)",
         "sources": [
           "NIST.SP.800-53r5.pdf",
           "SANS_Password_Construction_Standard_April2025.pdf"
         ],
-        "confidence": 0.86,
-        "CR": 0.1538,
+        "confidence": 0.77,
+        "CR": 0.125,
         "F": 1.0,
         "AR": 1.0,
-        "latency": 8.223,
+        "latency": 9.548,
         "resolved": true
       },
       {
         "query": "What are remote access security requirements?",
-        "answer": "According to the provided context from NIST.SP.800-53r5.pdf, remote access security requirements include:\n\n1. Establish and document usage restrictions, configuration/connection requirements, and implementation guidance for each type of remote access allowed (Page 74).\n2. Authorize each type of remote access to the system prior to allowing such connections (Page 74).\n3. Implement cryptographic mechanisms to protect the confidentiality and integrity of remote access sessions (Page 75).\n4. Route remote accesses through authorized and managed network access control points (Page 75).\n5. Authorize the execution of privileged commands and access to security-relevant information via remote access only in a format that provides assessable evidence (Page 75).\n6. Monitor for unauthorized connections (Page 75).\n7. Protect information about remote access mechanisms from unauthorized use and disclosure (Page 75).\n\nAdditionally, from Remote-Access-Policy-Template-FINAL.pdf, remote access security requirements include using Virtual Private Networks (VPNs) with encryption and strong pass-phrases (Page 0).",
+        "answer": "According to NIST.SP.800-53r5.pdf, remote access security requirements include:\n\n1. Establish and document usage restrictions, configuration/connection requirements, and implementation guidance for each type of remote access allowed (Page 74).\n2. Authorize each type of remote access to the system prior to allowing such connections (Page 74).\n3. Implement cryptographic mechanisms to protect the confidentiality and integrity of remote access sessions (Page 75).\n4. Route remote accesses through authorized and managed network access control points (Page 75).\n5. Authorize the execution of privileged commands and access to security-relevant information via remote access only in a format that provides assessable evidence (Page 75).\n6. Protect information about remote access mechanisms from unauthorized use and disclosure (Page 75).\n7. Monitor for unauthorized connections (Page 75).\n\nAdditionally, Remote-Access-Policy-Template-FINAL.pdf mentions that secure remote access will be strictly controlled with encryption through Virtual Private Networks (VPNs) and strong pass-phrases (Page 0).",
         "sources": [
           "NIST.SP.800-53r5.pdf",
           "Remote-Access-Policy-Template-FINAL.pdf"
         ],
-        "confidence": 0.35,
-        "CR": 0.9375,
+        "confidence": 0.49,
+        "CR": 0.871,
         "F": 1.0,
         "AR": 1.0,
-        "latency": 8.202,
+        "latency": 8.05,
         "resolved": true
       },
       {
         "query": "Which access control family enforces least privilege?",
-        "answer": "The access control family that enforces least privilege is AC-6, as stated on Page 456 of the NIST.SP.800-53r5.pdf source file. \n\nAdditionally, Page 62 of the same source file mentions that the principle of least privilege is applied to the development, implementation, and operation of organizational systems, and is related to controls AC-2, AC-3, AC-5, AC-16, CM-5, CM-11, PL-2, PM-12, SA-8, SA-15, SA-17, SC-38. However, the specific control that enforces least privilege is AC-6.",
+        "answer": "The access control family that enforces least privilege is AC-6, as stated on Page 456 of the NIST.SP.800-53r5.pdf source file. \n\nAdditionally, Page 62 of the same source file mentions that the principle of least privilege is applied, and it is related to Control AC-6, as seen on Page 456. \n\nOther related controls mentioned include AC-2, as seen on Page 455, but AC-6 is the primary control family associated with least privilege.",
         "sources": [
           "NIST.SP.800-53r5.pdf"
         ],
-        "confidence": 0.54,
-        "CR": 0.619,
+        "confidence": 0.91,
+        "CR": 0.2759,
         "F": 1.0,
-        "AR": 1.0,
-        "latency": 8.358,
+        "AR": 0.7143,
+        "latency": 10.846,
         "resolved": true
       },
       {
         "query": "How do you troubleshoot Kubernetes clusters?",
-        "answer": "To troubleshoot Kubernetes clusters, you can follow these steps:\n\n1. Run the command `kubectl get nodes` to verify that all nodes are registered correctly and in the Ready state.\n2. Use `kubectl cluster-info dump` to get detailed information about the overall health of your cluster.\n3. Use `kubectl describe node <node_name>` to get more information about a specific node.\n4. Check the status of a node using `kubectl get nodes`.\n5. Look at logs, such as `/var/log/kube-apiserver.log`, `/var/log/kube-scheduler.log`, `/var/log/kube-controller-manager.log`, `/var/log/kubelet.log`, and `/var/log/kube-proxy.log`, to diagnose issues.\n6. Use tools like Node Problem Detector to monitor node health and `kubectl debug node` to debug Kubernetes nodes.\n\nSource: Troubleshooting Clusters _ Kubernetes.pdf, pages 0, 1, 4, 5, 7.",
+        "answer": "To troubleshoot Kubernetes clusters, you can follow these steps:\n\n1. Run the command `kubectl get nodes` to verify that all nodes are registered correctly and in the Ready state.\n2. Use `kubectl cluster-info dump` to get detailed information about the overall health of your cluster.\n3. Use `kubectl describe node <node_name>` to get more information about a specific node.\n4. Look at logs, such as `/var/log/kube-apiserver.log`, `/var/log/kube-scheduler.log`, `/var/log/kube-controller-manager.log`, `/var/log/kubelet.log`, and `/var/log/kube-proxy.log`, to diagnose issues.\n5. Use tools like Node Problem Detector to monitor node health and `kubectl debug node` to debug Kubernetes nodes.\n\nSource: Troubleshooting Clusters _ Kubernetes.pdf, pages 0, 1, 4, 5, 7.",
         "sources": [
           "Troubleshooting Clusters _ Kubernetes.pdf"
         ],
-        "confidence": 0.51,
-        "CR": 0.8028,
+        "confidence": 0.81,
+        "CR": 0.7273,
         "F": 1.0,
         "AR": 1.0,
-        "latency": 12.242,
+        "latency": 11.409,
         "resolved": true
       }
     ]
@@ -91,10 +91,10 @@
       "top_k": 8
     },
     "aggregate": {
-      "CR": 0.5785,
-      "F": 0.9222,
-      "AR": 0.92,
-      "L": 15.723,
+      "CR": 0.4628,
+      "F": 1.0,
+      "AR": 0.9214,
+      "L": 10.159,
       "QR": 1.0,
       "refusals": 0,
       "total_queries": 5
@@ -106,11 +106,11 @@
         "sources": [
           "NIST.SP.800-61r2.pdf"
         ],
-        "confidence": 0.56,
-        "CR": 0.381,
+        "confidence": 0.74,
+        "CR": 0.3158,
         "F": 1.0,
-        "AR": 1.0,
-        "latency": 18.58,
+        "AR": 0.8571,
+        "latency": 15.362,
         "resolved": true
       },
       {
@@ -120,11 +120,11 @@
           "NIST.SP.800-53r5.pdf",
           "SANS_Password_Construction_Standard_April2025.pdf"
         ],
-        "confidence": 0.56,
-        "CR": 0.1463,
+        "confidence": 0.21,
+        "CR": 0.125,
         "F": 1.0,
         "AR": 1.0,
-        "latency": 10.357,
+        "latency": 5.631,
         "resolved": true
       },
       {
@@ -134,11 +134,11 @@
           "NIST.SP.800-53r5.pdf",
           "Remote-Access-Policy-Template-FINAL.pdf"
         ],
-        "confidence": 0.32,
-        "CR": 0.9375,
-        "F": 0.7778,
+        "confidence": 0.85,
+        "CR": 0.8667,
+        "F": 1.0,
         "AR": 1.0,
-        "latency": 16.027,
+        "latency": 11.762,
         "resolved": true
       },
       {
@@ -147,11 +147,11 @@
         "sources": [
           "NIST.SP.800-53r5.pdf"
         ],
-        "confidence": 0.37,
-        "CR": 0.6047,
+        "confidence": 0.73,
+        "CR": 0.2881,
         "F": 1.0,
-        "AR": 0.6,
-        "latency": 19.102,
+        "AR": 0.75,
+        "latency": 9.347,
         "resolved": true
       },
       {
@@ -160,11 +160,11 @@
         "sources": [
           "Troubleshooting Clusters _ Kubernetes.pdf"
         ],
-        "confidence": 0.82,
-        "CR": 0.8228,
-        "F": 0.8333,
+        "confidence": 0.79,
+        "CR": 0.7183,
+        "F": 1.0,
         "AR": 1.0,
-        "latency": 14.55,
+        "latency": 8.693,
         "resolved": true
       }
     ]
@@ -176,10 +176,10 @@
       "top_k": 8
     },
     "aggregate": {
-      "CR": 0.6231,
-      "F": 0.9,
-      "AR": 0.975,
-      "L": 9.843,
+      "CR": 0.5446,
+      "F": 1.0,
+      "AR": 0.9314,
+      "L": 6.982,
       "QR": 1.0,
       "refusals": 0,
       "total_queries": 5
@@ -192,65 +192,65 @@
           "NIST.SP.800-53r5.pdf",
           "NIST.SP.800-61r2.pdf"
         ],
-        "confidence": 0.61,
-        "CR": 0.5833,
+        "confidence": 0.93,
+        "CR": 0.5278,
         "F": 1.0,
-        "AR": 0.875,
-        "latency": 21.247,
+        "AR": 0.8571,
+        "latency": 2.513,
         "resolved": true
       },
       {
         "query": "What is the minimum password length?",
-        "answer": "The minimum password length is 16 characters, as stated in the SANS_Password_Construction_Standard_April2025.pdf (Page 0). Additionally, NIST.SP.800-53r5.pdf (Page 165) mentions that organizations may choose to establish certain rules for password generation, including minimum character length for long passwords, but it does not specify a particular length.",
+        "answer": "The minimum password length is 16 characters, as recommended in the SANS_Password_Construction_Standard_April2025.pdf (Page 0). Additionally, NIST.SP.800-53r5.pdf (Page 165) mentions that organizations may choose to establish certain rules for password generation, including minimum character length for long passwords, but it does not specify a particular length.",
         "sources": [
           "NIST.SP.800-53r5.pdf",
           "SANS_Password_Construction_Standard_April2025.pdf"
         ],
-        "confidence": 0.5,
-        "CR": 0.1923,
-        "F": 0.5,
-        "AR": 1.0,
-        "latency": 2.279,
+        "confidence": 0.71,
+        "CR": 0.1481,
+        "F": 1.0,
+        "AR": 0.8,
+        "latency": 6.147,
         "resolved": true
       },
       {
         "query": "What are remote access security requirements?",
-        "answer": "According to the provided context from NIST.SP.800-53r5.pdf, remote access security requirements include:\n\n1. MONITORING FOR UNAUTHORIZED CONNECTIONS \n2. PROTECTION OF MECHANISM INFORMATION \n3. ADDITIONAL PROTECTION FOR SECURITY FUNCTION ACCESS \n4. DISABLE NONSECURE NETWORK PROTOCOLS \n5. DISCONNECT OR DISABLE ACCESS \n6. PRIVILEGED COMMANDS AND ACCESS \n7. PROTECTION OF CONFIDENTIALITY AND INTEGRITY USING ENCRYPTION \n8. MANAGED ACCESS CONTROL POINTS \n9. MONITORING AND CONTROL \n\nThese requirements are mentioned in the context as related to remote access security. (Source: NIST.SP.800-53r5.pdf)",
+        "answer": "Remote access security requirements include:\n\n1. Implementing cryptographic mechanisms to protect the confidentiality and integrity of remote access sessions (Source: NIST.SP.800-53r5.pdf, Page 75).\n2. Routing remote accesses through authorized and managed network access control points (Source: NIST.SP.800-53r5.pdf, Page 75).\n3. Authorizing the execution of privileged commands and access to security-relevant information via remote access only in a format that provides assessable evidence (Source: NIST.SP.800-53r5.pdf, Page 75).\n4. Protecting information about remote access mechanisms from unauthorized use and disclosure (Source: NIST.SP.800-53r5.pdf, Page 75).\n5. Employing automated mechanisms to monitor and control remote access methods (Source: NIST.SP.800-53r5.pdf, Page 74).\n6. Establishing and documenting usage restrictions, configuration/connection requirements, and implementation guidance for each type of remote access allowed (Source: NIST.SP.800-53r5.pdf, Page 74).\n7. Authorizing each type of remote access to the system prior to allowing such connections (Source: NIST.SP.800-53r5.pdf, Page 74).\n8. Using encryption through Virtual Private Networks (VPNs) and strong pass-phrases (Source: Remote-Access-Policy-Template-FINAL.pdf, Page 0).",
         "sources": [
           "NIST.SP.800-53r5.pdf",
           "Remote-Access-Policy-Template-FINAL.pdf"
         ],
-        "confidence": 0.46,
-        "CR": 1.0,
+        "confidence": 0.93,
+        "CR": 0.9062,
         "F": 1.0,
         "AR": 1.0,
-        "latency": 8.217,
+        "latency": 10.302,
         "resolved": true
       },
       {
         "query": "Which access control family enforces least privilege?",
-        "answer": "AC-6 enforces least privilege. (Source: NIST.SP.800-53r5.pdf, Page: 50, 456)",
+        "answer": "AC-6 enforces least privilege. (Source: NIST.SP.800-53r5.pdf, Page: 50, 62, 456)",
         "sources": [
           "NIST.SP.800-53r5.pdf"
         ],
-        "confidence": 0.8,
-        "CR": 0.6304,
+        "confidence": 0.97,
+        "CR": 0.6087,
         "F": 1.0,
         "AR": 1.0,
-        "latency": 9.78,
+        "latency": 6.592,
         "resolved": true
       },
       {
         "query": "How do you troubleshoot Kubernetes clusters?",
-        "answer": "To troubleshoot Kubernetes clusters, you can follow these steps:\n\n1. Run the command \"kubectl get nodes\" to verify that all nodes are registered correctly and in the Ready state. (Source: Troubleshooting Clusters _ Kubernetes.pdf, Section: Troubleshooting Clusters, Page: 0)\n2. Use the command \"kubectl cluster-info dump\" to get detailed information about the overall health of your cluster. (Source: Troubleshooting Clusters _ Kubernetes.pdf, Section: Troubleshooting Clusters, Page: 0)\n3. Use Node Problem Detector to monitor node health. (Source: Troubleshooting Clusters _ Kubernetes.pdf, Category: TROUBLESHOOTING, Section: UNKNOWN, Page: 7)\n4. Use \"kubectl debug node\" to debug Kubernetes nodes. (Source: Troubleshooting Clusters _ Kubernetes.pdf, Category: TROUBLESHOOTING, Section: UNKNOWN, Page: 7)\n5. Look at logs, for example, on systemd-based systems, you may need to use journalctl instead of examining log files. (Source: Troubleshooting Clusters _ Kubernetes.pdf, Category: TROUBLESHOOTING, Section: UNKNOWN, Page: 4)\n\nThese steps can help you identify and troubleshoot issues in your Kubernetes cluster. (Source: Troubleshooting Clusters _ Kubernetes.pdf, Category: TROUBLESHOOTING, Section: Troubleshooting Clusters, Page: 0)",
+        "answer": "To troubleshoot Kubernetes clusters, you can follow these steps:\n\n1. Run the command \"kubectl get nodes\" to verify that all nodes are registered correctly and in the Ready state. (Source: Troubleshooting Clusters _ Kubernetes.pdf, Section: Troubleshooting Clusters, Page: 0)\n2. Use \"kubectl cluster-info dump\" to get detailed information about the overall health of your cluster. (Source: Troubleshooting Clusters _ Kubernetes.pdf, Section: Troubleshooting Clusters, Page: 0)\n3. Use Node Problem Detector to monitor node health. (Source: Troubleshooting Clusters _ Kubernetes.pdf, Category: TROUBLESHOOTING, Section: UNKNOWN, Page: 7)\n4. Use \"kubectl debug node\" to debug Kubernetes nodes. (Source: Troubleshooting Clusters _ Kubernetes.pdf, Category: TROUBLESHOOTING, Section: UNKNOWN, Page: 7)\n5. Look at logs, such as /var/log/kube-apiserver.log, to dig deeper into the cluster. (Source: Troubleshooting Clusters _ Kubernetes.pdf, Category: TROUBLESHOOTING, Section: UNKNOWN, Page: 4) \n\nNote: These steps are explicitly mentioned in the provided context.",
         "sources": [
           "Troubleshooting Clusters _ Kubernetes.pdf"
         ],
-        "confidence": 0.62,
-        "CR": 0.7097,
+        "confidence": 0.9,
+        "CR": 0.5323,
         "F": 1.0,
         "AR": 1.0,
-        "latency": 7.692,
+        "latency": 9.355,
         "resolved": true
       }
     ]
